@@ -32,12 +32,16 @@ VALID_NAMES = [
 
 
 
-
-def get_model(name):
+def get_model(name, num_heads=1, feature_dropout=0.0):
     assert name in VALID_NAMES
     if name.startswith("Imagenet:"):
-        return ImagenetModel(name[9:]) 
+        return ImagenetModel(name[9:])
     elif name.startswith("CLIP:"):
-        return CLIPModel(name[5:])  
+        return CLIPModel(
+            name[5:],
+            num_classes=1,
+            num_heads=num_heads,
+            feature_dropout=feature_dropout,
+        )
     else:
-        assert False 
+        assert False

@@ -14,11 +14,15 @@ CVPR 2023
 
 ## Contents
 
-- [Setup](#setup)
-- [Pretrained model](#weights)
-- [Data](#data)
-- [Evaluation](#evaluation)
-- [Training](#training)
+- [Detecting fake images](#detecting-fake-images)
+  - [Contents](#contents)
+  - [Setup](#setup)
+  - [Data](#data)
+  - [Evaluation](#evaluation)
+  - [Training](#training)
+  - [Acknowledgement](#acknowledgement)
+  - [Citation](#citation)
+  - [This repository](#this-repository)
 
 
 ## Setup 
@@ -108,3 +112,11 @@ If you find our work helpful in your research, please cite it using the followin
       year={2023},
 }
 ```
+
+
+## This repository
+
+This repository is a modified and extended version of:
+https://github.com/utkarshojha/...
+
+Maintained by: Duc Thien (ducthien-k24)

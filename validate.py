@@ -94,13 +94,13 @@ def calculate_acc(y_true, y_pred, thres):
     return r_acc, f_acc, acc    
 
 
-def validate(model, loader, find_thres=False):
+def validate(model, loader, device, find_thres=False):
 
     with torch.no_grad():
         y_true, y_pred = [], []
         print ("Length of dataset: %d" %(len(loader)))
         for img, label in loader:
-            in_tens = img.cuda()
+            in_tens = img.to(device)
 
             y_pred.extend(model(in_tens).sigmoid().flatten().tolist())
             y_true.extend(label.flatten().tolist())
@@ -266,26 +266,51 @@ if __name__ == '__main__':
 
     parser.add_argument('--jpeg_quality', type=int, default=None, help="100, 90, 80, ... 30. Used to test robustness of our model. Not apply if None")
     parser.add_argument('--gaussian_sigma', type=int, default=None, help="0,1,2,3,4.     Used to test robustness of our model. Not apply if None")
+    
+    parser.add_argument('--num_heads', type=int, default=1)
+    parser.add_argument('--feature_dropout', type=float, default=0.0)  # validate thì dropout không dùng vì model.eval()
+
 
 
     opt = parser.parse_args()
+    
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
+
+    print("Using device:", device)
 
     
     if os.path.exists(opt.result_folder):
         shutil.rmtree(opt.result_folder)
     os.makedirs(opt.result_folder)
 
-    model = get_model(opt.arch)
-    state_dict = torch.load(opt.ckpt, map_location='cpu')
-    model.fc.load_state_dict(state_dict)
+    model = get_model(opt.arch, num_heads=opt.num_heads, feature_dropout=opt.feature_dropout)
+    
+    ckpt = torch.load(opt.ckpt, map_location='cpu')
+
+# Nếu checkpoint có key 'model' (save full model)
+    if isinstance(ckpt, dict) and 'model' in ckpt:
+        model.load_state_dict(ckpt['model'], strict=True)
+    else:
+    # Fallback: nếu bạn lưu heads-only
+        if hasattr(model, "fcs"):
+            model.fcs.load_state_dict(ckpt, strict=True)
+        else:
+            model.fc.load_state_dict(ckpt, strict=True)
+
+
     print ("Model loaded..")
     model.eval()
-    model.cuda()
+    model.to(device)
 
     if (opt.real_path == None) or (opt.fake_path == None) or (opt.data_mode == None):
         dataset_paths = DATASET_PATHS
     else:
-        dataset_paths = [ dict(real_path=opt.real_path, fake_path=opt.fake_path, data_mode=opt.data_mode) ]
+        dataset_paths = [ dict(real_path=opt.real_path, fake_path=opt.fake_path, data_mode=opt.data_mode, key = 'debug') ]
 
 
 
@@ -302,7 +327,7 @@ if __name__ == '__main__':
                                     )
 
         loader = torch.utils.data.DataLoader(dataset, batch_size=opt.batch_size, shuffle=False, num_workers=4)
-        ap, r_acc0, f_acc0, acc0, r_acc1, f_acc1, acc1, best_thres = validate(model, loader, find_thres=True)
+        ap, r_acc0, f_acc0, acc0, r_acc1, f_acc1, acc1, best_thres = validate(model, loader, device, find_thres=True)
 
         with open( os.path.join(opt.result_folder,'ap.txt'), 'a') as f:
             f.write(dataset_path['key']+': ' + str(round(ap*100, 2))+'\n' )

@@ -43,6 +43,11 @@ class BaseOptions():
         parser.add_argument('--init_type', type=str, default='normal', help='network initialization [normal|xavier|kaiming|orthogonal]')
         parser.add_argument('--init_gain', type=float, default=0.02, help='scaling factor for normal, xavier and orthogonal.')
         parser.add_argument('--suffix', default='', type=str, help='customized suffix: opt.name = opt.name + suffix: e.g., {model}_{netG}_size{loadSize}')
+        
+        parser.add_argument('--num_heads', type=int, default=1)
+        parser.add_argument('--feature_dropout', type=float, default=0.2)  # ví dụ 0.1–0.3
+
+
         self.initialized = True
         return parser
 

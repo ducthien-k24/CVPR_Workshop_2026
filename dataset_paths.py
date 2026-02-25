@@ -1,90 +1,82 @@
 DATASET_PATHS = [
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/progan',     
-        fake_path='../FAKE_IMAGES/CNN/test/progan',
+        real_path='./datasets/test/progan',
+        fake_path='./datasets/test/progan',
         data_mode='wang2020',
         key='progan'
     ),
 
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/cyclegan',   
-        fake_path='../FAKE_IMAGES/CNN/test/cyclegan',
+        real_path='./datasets/test/cyclegan',
+        fake_path='./datasets/test/cyclegan',
         data_mode='wang2020',
         key='cyclegan'
     ),
 
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/biggan/',   # Imagenet 
-        fake_path='../FAKE_IMAGES/CNN/test/biggan/',
+        real_path='./datasets/test/biggan',
+        fake_path='./datasets/test/biggan',
         data_mode='wang2020',
         key='biggan'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/stylegan',    
-        fake_path='../FAKE_IMAGES/CNN/test/stylegan',
+        real_path='./datasets/test/stylegan',
+        fake_path='./datasets/test/stylegan',
         data_mode='wang2020',
         key='stylegan'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/gaugan',    # It is COCO 
-        fake_path='../FAKE_IMAGES/CNN/test/gaugan',
+        real_path='./datasets/test/gaugan',
+        fake_path='./datasets/test/gaugan',
         data_mode='wang2020',
         key='gaugan'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/stargan',  
-        fake_path='../FAKE_IMAGES/CNN/test/stargan',
+        real_path='./datasets/test/stargan',
+        fake_path='./datasets/test/stargan',
         data_mode='wang2020',
         key='stargan'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/deepfake',   
-        fake_path='../FAKE_IMAGES/CNN/test/deepfake',
+        real_path='./datasets/test/deepfake',
+        fake_path='./datasets/test/deepfake',
         data_mode='wang2020',
         key='deepfake'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/seeingdark',   
-        fake_path='../FAKE_IMAGES/CNN/test/seeingdark',
+        real_path='./datasets/test/seeingdark',
+        fake_path='./datasets/test/seeingdark',
         data_mode='wang2020',
         key='sitd'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/san',   
-        fake_path='../FAKE_IMAGES/CNN/test/san',
+        real_path='./datasets/test/san',
+        fake_path='./datasets/test/san',
         data_mode='wang2020',
         key='san'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/crn',   # Images from some video games
-        fake_path='../FAKE_IMAGES/CNN/test/crn',
+        real_path='./datasets/test/crn',
+        fake_path='./datasets/test/crn',
         data_mode='wang2020',
         key='crn'
     ),
 
-
     dict(
-        real_path='../FAKE_IMAGES/CNN/test/imle',   # Images from some video games
-        fake_path='../FAKE_IMAGES/CNN/test/imle',
+        real_path='./datasets/test/imle',
+        fake_path='./datasets/test/imle',
         data_mode='wang2020',
         key='imle'
     ),
+
     
 
     dict(
@@ -147,7 +139,5 @@ DATASET_PATHS = [
         data_mode='wang2020',
         key='dalle'
     ),
-
-
 
 ]
